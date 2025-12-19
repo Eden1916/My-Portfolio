@@ -51,7 +51,7 @@ portfolio/
 
 Clone the repository:
 
-git clone https://github.com/your-username/portfolio.git
+git clone https://github.com/Eden1916/My-Portfolio.git
 cd portfolio
 
 
@@ -87,6 +87,6 @@ useEffect(() => {
 
 📧 Email: eduedensahle@gmail.com
 
-🌍 Portfolio: (coming soon)
+🌍 Portfolio: (https://github.com/Eden1916/My-Portfolio.git)
 💼 LinkedIn: (https://www.linkedin.com/in eden-sahlie-729b45357/)
 🐙 GitHub: (https://github.com/Eden1916)
