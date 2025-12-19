@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {Projects} from "./Projects.js";
 import myPhoto from "../assets/photo 6.jpg";
 
 export default function Portfolio({ theme, setTheme }) {
@@ -122,11 +123,13 @@ export default function Portfolio({ theme, setTheme }) {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-10">Projects</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1,2,3].map(p => (
-              <div key={p} className={`p-6 rounded-2xl shadow ${theme === "dark" ? "bg-gray-800 text-white shadow-gray-950" : "bg-gray-200 text-gray-900 shadow-gray-400"}`}>
-                <div className={`h-40 rounded-xl ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"} mb-4`}></div>
-                <h3 className="text-xl font-bold mb-2">Project {p}</h3>
-                <p className={`text-md ${theme === "dark" ? "text-white" : "text-gray-900"}`}>Short description about the project.</p>
+            {Projects.map(p => (
+              <div key={p.id} className={`items-center  justify-center p-6 rounded-2xl shadow ${theme === "dark" ? "bg-gray-800 text-white shadow-gray-950" : "bg-gray-200 text-gray-900 shadow-gray-400"}`}>
+                <div className={`h-40 flex rounded-xl ${theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"} mb-4 items-center justify-center`}>
+                  <a href={p.link} target="blank"><img className="h-38 w-auto rounded items-center object-fill justify-center cursor-pointer" src = {p.img}/></a>
+                  </div>
+                <h3 className="text-xl font-bold mb-2">{p.name}</h3>
+                <p className={`text-md ${theme === "dark" ? "text-white" : "text-gray-900"}`}>{p.description}</p>
               </div>
             ))}
           </div>
