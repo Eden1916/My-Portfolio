@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {Projects} from "./Projects.js";
-import myPhoto from "../assets/photo 6.jpg";
+import myPhoto from "../assets/photo.jpg";
 
 export default function Portfolio({ theme, setTheme }) {
   const [menuOpen, setMenuOpen] = useState(false);
