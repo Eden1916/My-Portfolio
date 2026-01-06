@@ -2,10 +2,43 @@ import { useState } from "react";
 import {Projects} from "./Projects.js";
 import myPhoto from "../assets/photo.jpg";
 
-export default function Portfolio({ theme, setTheme }) {
+export default function Portfolio({ theme, setTheme }) {  
   const [menuOpen, setMenuOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
   const toggleTheme = () => setTheme(prev => prev === "light" ? "dark" : "light");
 
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+  
+    try {
+      console.log("Submitting form", formData);
+
+      const res = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error("Failed to send message");
+
+      setSuccess(true);
+      setFormData({ name: "", email: "", message: "" }); // clear form
+    } catch (err) {
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={`min-h-screen transition-colors duration-200 ${ theme === "dark" ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
@@ -102,7 +135,9 @@ export default function Portfolio({ theme, setTheme }) {
       <section id="about" className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold mb-4">About Me</h2>
-          <p className="text-xl leading-relaxed">I am a passionate developer who loves creating beautiful and functional user interfaces using React and Tailwind CSS.</p>
+          <p className="text-xl leading-relaxed">I’m a passionate web developer with a strong interest in building clean, responsive, and user-friendly web applications. I enjoy turning ideas into real projects using HTML, CSS, JavaScript, and React.
+
+            I’m continuously learning modern web technologies like Tailwind CSS and Firebase, and I love solving problems and improving my skills through hands-on projects. My goal is to grow as a developer and contribute to meaningful, real-world applications.</p>
         </div>
       </section>
 
@@ -149,8 +184,47 @@ export default function Portfolio({ theme, setTheme }) {
       <section id="contact" className="py-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Contact</h2>
-          <p className="mb-8 text-lg">Feel free to reach out for collaborations or any questions!</p>
-          <a href="mailto:eduedensahle@gmail.com" className="px-6 py-3 rounded-xl text-lg text-blue-600">eduedensahle@gmail.com</a>
+
+          {success && <p className="text-green-500 mb-4">Message sent successfully!</p>}
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <form className="mb-8" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your name"
+              className={`w-full mb-4 px-4 py-2 rounded-xl border placeholder:text-gray-500 ${theme === "dark" ? "bg-gray-800 text-white border-gray-700" : "bg-gray-100 text-gray-900 border-gray-300"}`}
+              required
+            />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              className={`w-full mb-4 px-4 py-2 rounded-xl border placeholder:text-gray-500 ${theme === "dark" ? "bg-gray-800 text-white border-gray-700" : "bg-gray-100 text-gray-900 border-gray-300"}`}
+              required
+            />
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Enter your message"
+              rows={5}
+              className={`w-full mb-4 px-4 py-2 rounded-xl border placeholder:text-gray-500 ${theme === "dark" ? "bg-gray-800 text-white border-gray-700" : "bg-gray-100 text-gray-900 border-gray-300"}`}
+              required
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className={`px-6 py-3 cursor-pointer rounded-xl ${theme === "dark" ? "bg-gray-800 text-white hover:bg-gray-700" : "bg-gray-100 text-black hover:bg-gray-200"} disabled:opacity-50 disabled:cursor-not-allowed`}
+            >
+              {loading ? "Sending..." : "Send Message"}
+            </button>
+          </form>
+          <div className="mt-12">
+          <a href="mailto:eduedensahle@gmail.com" className="block px-6 py-3 rounded-xl text-lg text-blue-600">eduedensahle@gmail.com</a>
           <a 
                 href="https://t.me/@ed_en_123" 
                 target="_blank">
@@ -172,7 +246,8 @@ export default function Portfolio({ theme, setTheme }) {
                         src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" 
                         alt="GitHub" />
                 </a>
-        </div>
+                </div>
+                </div>
       </section>
 
       <footer className="py-6 text-center text-sm">
