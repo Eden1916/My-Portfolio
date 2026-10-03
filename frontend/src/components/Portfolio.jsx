@@ -148,7 +148,7 @@ export default function Portfolio({ theme, setTheme }) {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-6">Skills</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-            {['HTML','CSS','JavaScript','React','TailwindCSS'].map(skill => (
+            {['HTML','CSS','JavaScript','React','TailwindCSS','MongoDB', 'PostgresSQL', 'Git', 'GitHub'].map(skill => (
               <div key={skill} className={`p-4 rounded-xl shadow ${theme === "dark" ? "bg-gray-800 text-white" : "bg-gray-200 text-gray-900"} text-center font-semibold`}>{skill}</div>
             ))}
           </div>
